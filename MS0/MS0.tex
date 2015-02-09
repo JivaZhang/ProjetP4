@@ -1,0 +1,162 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\newcommand{\PDeriv}[2]{\frac{\partial#1}{\partial#2}} % Pour faire des fractions derivees partielle sans trops se casser la tete :) (p. ex. \PDeriv{y(t}{t})
+\newcommand{\V}[1]{\overrightarrow{#1}}
+\newcommand{\Base}[1]{\widehat{\uline{a_{#1}}}} % Pour les vecteurs de base (MMC) par exemple \Base{1},\Base{2} et \Base{3}
+
+\begin{document}
+\title{Projet 4: MS0}
+\date\today
+\author{Groupe 7}
+\maketitle
+
+Afin de mener à bien le projet P4 en électricité, l'électromagnétisme et la théorie des signaux sont essentiels. Pour entamer ce projet, il est nécessaire de s'intéresser en particulier à deux concepts à savoir le produit de corrélation pour ce qui est des signaux et le champs électromagnétique issu d'un point de courant pour ce qui est de l'électromagnétisme.
+
+\section{Corrélation et convolution}
+	L'opération de corrélation est donnée par l'équation \ref{corr}.Par indentification avec la définition de le produit de convolution (\ref{conv}), il est possible d'exprimer cette opération de corrélation par une convolution. Cette relation est donnée grâce à l'équation \ref{link}.
+
+	\begin{equation}
+		c(\tau) = \int _{-\infty}^{+\infty} r(t)s(t-\tau) dt
+        \label{corr}
+	\end{equation}
+
+	\begin{equation}
+		(f*g)(x) = \int _{-\infty}^{+\infty} f(t)g(x-t)dt
+        \label{conv}
+	\end{equation}
+	
+	\begin{equation}
+		c(\tau) = r(t)*s(-t)
+        \label{link}
+	\end{equation}
+	
+	De plus le produit de convolution dans le domaine temporel devient un produit dans le domaine fréquentielle (\ref{f1}). Si $s(t)$ est une signal réel, sa transformée de fourier est paire.Il est donc possible de remplacer l'équation \ref{f1} par \ref{f2}.
+	\begin{equation}
+		C(\omega) = R(\omega)S(-\omega)
+        \label{f1}
+	\end{equation}
+    
+    \begin{equation}
+		C(\omega) = R(\omega)S(\omega)
+        \label{f2}
+	\end{equation}
+    
+    
+\section{Champs électromagnétique}
+Notre but est de caractériser les antennes que nous utiliserons dans le cadre de ce projet. Pour cela nous allons commencer par trouver le champs électromagnétique généré par un point de courant au point $\overrightarrow{r}$. Il parait donc judicieux de modéliser le point de courant en phasoriel\footnote{Tous les développements des champs et des courants seront fait dans le domaine phasoriel} par un delta de dirac tel que $\overrightarrow{I}=\delta (\overrightarrow{r})\widehat{n}$. On peut orienter le repère dans le sens du courant ce qui revient au final à $\overrightarrow{I}=\delta (\overrightarrow{r})\widehat{a}_z$.
+
+On connait l'expression suivante:
+$$\nabla^2 \overrightarrow{A}+k^2 \overrightarrow{A}=\mu \delta (\overrightarrow{r}) \widehat{a}_z$$
+La solution de cette équation est:
+$$\overrightarrow{A}=\mu \dfrac{e^{-jkr}}{4\pi r}\widehat{a}_z$$
+À partir du champs $\overrightarrow{A}$, on peut trouver l'expression du champs $\overrightarrow{B}$ et $\overrightarrow{E}$.\\
+Avant de faire cela, il faut d'abbord réexprimer $\overrightarrow{A}$ en coordonnées sphériques $(r,\theta , \phi)$. Pour cela réexprimons le vecteur unitaire $\widehat{a}_z$ en fonction de $\widehat{a}_r$, $\widehat{a}_\theta$, $\widehat{a}_\phi$:
+$$\widehat{a}_z=\cos(\theta)\widehat{a}_r-\sin(\theta)\widehat{a}_\theta$$
+
+Et donc on obtient:
+\begin{equation}\label{equne}
+\overrightarrow{A}=\mu \dfrac{e^{-jkr}}{4\pi r} (\cos(\theta)\widehat{a}_r-\sin(\theta)\widehat{a}_\theta)
+\end{equation}
+\\
+
+\indent \textbf{Champs} $\overrightarrow{B}$\\
+Le champs $\overrightarrow{B}$ peut est donné par la relation suivante:
+$$\overrightarrow{B}=\overrightarrow{\nabla}\times \overrightarrow{A}$$
+Au vu de l'égalité \ref{equne}, le champs $\overrightarrow{A}$ peut s'exprimer comme:
+$$\overrightarrow{A}=A_{r}(r,\theta)\widehat{a}_r+A_{\theta}(r,\theta)\widehat{a}_\theta$$
+On a donc l'expression suivante pour le rotationnel:
+$$\nabla \times \overrightarrow{A}= \dfrac{1}{r} \left[ \dfrac{\partial}{\partial r} (r A_{\theta}) - \dfrac{\partial A_r}{\partial \theta} \right]\widehat{a}_{\phi}$$
+
+Les autres termes étants nuls.
+
+On obtient donc en insérant \ref{equne} dans cette expression:
+$$\overrightarrow{B}= \mu\dfrac{e^{-jkr}}{4\pi} \left[ \dfrac{jk \sin (\theta )}{r} + \dfrac{\sin (\theta )}{r^2} \right]\widehat{a}_{\phi} $$
+
+
+\indent \textbf{Champs} $\overrightarrow{E}$\\
+
+Pour le champ électrique, on a l'expression suivante : 
+
+\begin{equation}
+\overrightarrow{E} = - \nabla V - \PDeriv{\overrightarrow{A}}{t}
+\end{equation}
+
+Connaissant l'expression du champ $\V{A}$ ci-dessus, on peut calculer le second terme :
+
+\begin{equation}
+\PDeriv{\V{A}}{t} = j \omega \left( \frac{\mu e^{-jkr} \cos \theta}{4 \pi r} \Base{r} - \frac{\mu e^{-jkr} \sin \theta}{4 \pi r^2} \Base{\theta} \right)
+\end{equation}
+
+Il faut ensuite calculer le gradient du potentiel. Premièrement, calculons le potentiel en utilisant l'hypothèse qu'on a faite pour simplifier l'équation d'onde :
+
+\begin{equation}
+\nabla \cdot \V{A} = - \mu \epsilon \PDeriv{V}{t}
+\end{equation}
+
+Et donc $V = \frac{-1}{\mu \epsilon} \int \nabla \cdot \V{A} \mathrm{d}t$ ce qui donne finalement l'expression du potentiel :
+
+\begin{equation}
+V = \frac{-1}{j \mu \epsilon} \frac{e^{-jkr} \cos \theta}{2 \pi} \left( \frac{1}{2r^2} - \frac{jk}{r} \right)
+\end{equation}
+
+On peut ensuite en calculer le gradient :
+
+\begin{equation}
+\nabla V = \frac{e^{-jkr} \cos \theta}{j \omega \epsilon 2 \pi} \left( jk(\frac{1}{2r^2} - \frac{jk}{r}) + \frac{1}{r^3} - \frac{jk}{r^2} \right) \Base{r} + \frac{e^{-jkr} \sin \theta }{j \omega \epsilon 2 \pi} \left( \frac{1}{2r^2} - \frac{jk}{r} \right) \Base{\theta}
+\end{equation}
+
+Et, en combinant le tout et en recombinant les termes, on trouve le champ électrique :
+
+
+\begin{multline}
+\V{E} = \frac{\cos \theta e^{-jkr}}{\pi} \left( \frac{\eta}{2r^2}  - \frac{\eta j}{2kr^3}  \right) \Base{r} \\ 
++ \frac{e^{-jkr}\sin \theta}{\pi} \left( \frac{\mu j \omega}{4r} + \frac{\eta}{4 r^2} - \frac{j \eta }{4 k r^3} \right) \Base{\theta}
+\end{multline}
+
+
+\indent \textbf{A grande distance}\\
+A grande distance, les termes en $\frac{1}{r}$ vont dominer, et on obtient une nouvelle expresion pour les champs :
+\begin{equation}
+\V{B} \simeq \frac{\mu e^{-jkr} jk \sin \theta}{4 \pi r} \Base{\phi}
+\end{equation}
+\begin{equation}
+\V{E} \simeq \frac{\sin \theta e^{-jkr}j}{\pi}  \frac{\mu \omega}{4 r}  \Base{\theta}
+\end{equation}
+
+
+\indent \textbf{Deux points de courants}\\
+On peut maintenant regarder le champs à grande distance résulatant de la présence de deux points de courant séparés par une distance $\lambda /8$. Pour cela on peut additionner les composantes des deux champs magnétiquues et électriques pour les deux points de courant. Les disances entre un point de l'espace et les deux points de courant sont respectivement données par $r=\sqrt{x^2+y^2+z^2}$ et $r'=\sqrt{x^2+y^2+(z-\lambda /8)^2}$. On peut également redéfinir $r'$ en fonction de r et l'angle $\theta$ de la manière suivante:
+$$ (r')^2=r^2+\left( \dfrac{\lambda}{8}\right)^2-2\pi \dfrac{\lambda}{8}\cos (\theta )$$
+
+\textbf{Champs} $\overrightarrow{B}$\\
+Pour le champs magnétique à grande distance on trouve donc:
+\begin{equation}
+\overrightarrow{B}= \frac{\mu e^{-jkr} jk \sin (\theta )}{4 \pi r} \Base{\phi} + \frac{\mu e^{-jkr'} jk \sin (\theta )}{4 \pi r'} \Base{\phi}
+\end{equation}
+On peut également faire les approximations suivantes:
+$$\V{r}\approx \V{r}'$$
+$$r'\approx r-\frac{\lambda}{8}\cos (\theta)$$
+Cela amène:
+$$e^{-jkr'}=e^{-jkr}e^{jk\frac{\lambda}{8}\cos (\theta)}$$
+On peut par contre dire que $r\approx r'$ pour les dénominateurs des champs. On a alors:
+\begin{equation}
+\overrightarrow{B}= \dfrac{\mu e^{-jkr} jk \sin (\theta )}{4 \pi r}(1+e^{jk\frac{\lambda}{8}\cos (\theta)}) \Base{\phi}
+\end{equation}
+
+\textbf{Champs} $\overrightarrow{E}$\\
+Regardons ce qu'il en est du champs E. On sait qu'à grande dista,ce il s'exprime comme:
+\begin{equation}
+\overrightarrow{E}\approx j\omega \mu \frac{e^{-jkr} \sin (\theta )}{4 \pi r} \Base{\theta}+j\omega \mu \frac{e^{-jkr'} \sin (\theta )}{4 \pi r'} \Base{\theta}
+\end{equation}
+Par une méthode similaire à celle employée pour déterminer le champs magnétique:
+\begin{equation}
+\overrightarrow{E}= j\omega \mu \frac{e^{-jkr} \sin (\theta )}{4 \pi r}(1+e^{jk\frac{\lambda}{8}\cos (\theta)}) \Base{\theta}
+\end{equation}
+
+
+
+\end{document}
