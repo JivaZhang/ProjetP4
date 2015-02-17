@@ -1,4 +1,4 @@
-function view( Z , d , target , Tx)
+function viewTrilateration( Z , d , target , Tx)
 Z1 = Z(1 , :);
 Z2 = Z(2 , :);
 Z3 = Z(3 , :);
