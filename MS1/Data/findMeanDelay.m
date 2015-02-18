@@ -8,11 +8,9 @@ function [ meanDelay] = findMeanDelay( interval , nInterval , x , i)
         time = x(1:(ed-bg+1) , 1);
         s = x(bg:ed, 2);
         r = x(bg:ed, i);
-        S = fft(s);
-        R = fft(r);
-        C = R .* conj(S);
-        c = ifft(C);
+        c = corFreq(r , s);
         [max_value, index] = max(c(:));
+        plot(time , c);
         sdelay = sdelay + time(index);
         n = n+1;
     end
