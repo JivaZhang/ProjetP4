@@ -10,7 +10,6 @@ function [ meanDelay] = findMeanDelay( interval , nInterval , x , i)
         r = x(bg:ed, i);
         c = corFreq(r , s);
         [max_value, index] = max(c(:));
-        plot(time , c);
         sdelay = sdelay + time(index);
         n = n+1;
     end

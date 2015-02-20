@@ -1,13 +1,12 @@
 
-
 close all;
 
 if (not(exist('data','var')))
-    x = load('P2_cal.tsv');
+    x = load('P3_cal.tsv');
 end
 sp = 299792458; % Light Speed [m/s]
 
-Tx = 1e-2*[154.5 15];
+Tx = 1e-2*[204.8 15];
 Z1 = 1e-2*[160.2 -416];
 Z2 = 1e-2*[340 -416];
 Z3 = 1e-2*[66.4 543.4];
