@@ -1,12 +1,11 @@
 
 close all;
 
-if (not(exist('data','var')))
-    x = load('P3_cal.tsv');
-end
+%if (not(exist('data','var')))
+%    x = load('P3_cal.tsv');
+%end
 sp = 299792458; % Light Speed [m/s]
-
-Tx = 1e-2*[204.8 15];
+% Emit = 1e-2*[ 104.7 15];
 Z1 = 1e-2*[160.2 -416];
 Z2 = 1e-2*[340 -416];
 Z3 = 1e-2*[66.4 543.4];
@@ -20,10 +19,11 @@ for i=3:5
     d(i-2) = findMeanDelay(interval , nInterval , x , i);
 end
 
-d = d.*sp
+d = d.*sp;
 
-target = findTarget(Z , d);
-viewTrilateration( Z , d , target , Tx);
+[target ,fval] = findTarget(Z , d);
+err = norm(target-Emit);
+viewTrilateration( Z , d , target , Emit);
 
 
 

@@ -70,5 +70,18 @@
 			 
 			La deuxième méthode consiste à diviser le signal en plusieurs parties. Dans le cas ici présent, un temps de vol est calculé pour chaque impulsion émises. Dans ce cas l'opération de corrélation se fait dans le domaine fréquentielle en utilisant les fonctions \texttt{fft} et \texttt{ifft} de \texttt{Matlab}. Le temps de vol utilisé est la moyenne de l'échantillon récolté sur chaque impulsion.
 			
+			\begin{figure}
+				\centering
+				\begin{tabular}{|l|l|l|}
+					\hline
+					fonction & temps moyen[s] & erreur moyenne[cm] \\
+					\hline
+					no-split & 0.8516 & 0.1711 \\
+					split & 0.5857 & 0.2566 \\
+					\hline
+				\end{tabular}
+				\caption{Comparaison des différentes méthodes}
+			\end{figure}
+			
 						
 \end{document}

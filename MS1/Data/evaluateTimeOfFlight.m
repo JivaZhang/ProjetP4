@@ -5,20 +5,20 @@ c = 299792458; % Light Speed [m/s]
 Z1 = 1e-2*[160.2 -416 ];
 Z2 = 1e-2*[340   -416 ];
 Z3 = 1e-2*[66.4  543.4];
-
+%Emit = 1e-2*[107.4 15];
 %% DATA RETRIVATION AND DISTANCE CALCULATION
 
 % Check if data is already loaded to avoid unnessary loading
-if (not(exist('data','var')))
-    data = load('P2_cal.tsv');
-end
+%if (not(exist('data','var')))
+%    data = load('P2_cal.tsv');
+%end
 
-t   = data(:,1);        % Time, increment is 2.5e-11 seconds
+t   = x(:,1);        % Time, increment is 2.5e-11 seconds
 Sr  = 1/(t(2)-t(1));    % Sample rate
-Tx  = data(:,2);        % Emitted signal
-Rx1 = data(:,3);        % Received signal at 1st receiver
-Rx2 = data(:,4);        % ... at 2nd...
-Rx3 = data(:,5);        % ... at 3th...
+Tx  = x(:,2);        % Emitted signal
+Rx1 = x(:,3);        % Received signal at 1st receiver
+Rx2 = x(:,4);        % ... at 2nd...
+Rx3 = x(:,5);        % ... at 3th...
 
 
 [Cor1,Ind1] = xcorr(Rx1,Tx);
@@ -51,8 +51,12 @@ plotCircle(Z3(1),Z3(2),d3,'r');
 
 % xlim([-10,10]);
 % ylim([-10,10]);
-axis([-10 10 -10 10]);
 
+axis([-10 10 -10 10]);
+[target fval] = findTarget( [Z1 ; Z2 ; Z3] , [d1 , d2 , d3] );
+target ;
+
+err = norm(target - Emit);
 plot(1.547,0.15,'co');
 
 hold off;
