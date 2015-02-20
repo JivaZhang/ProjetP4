@@ -10,13 +10,14 @@
 \newcommand{\Base}[1]{\widehat{\uline{a_{#1}}}} % Pour les vecteurs de base (MMC) par exemple \Base{1},\Base{2} et \Base{3}
 
 \begin{document}
-\title{Projet 4: MS0}
+\title{Projet 4: MS1}
 \date\today
 \author{Groupe 7}
 \maketitle
 
 \section{Trilateration}
 	La trilateration est une manière de localiser une cible à partir de trois récepteurs en se basant sur l'estimation du temps de vol entre la cible et un des récepteurs. 
+		
 		
 	Afin de localiser la cible au moins trois récepteurs fixes sont nécessaire. En effet pour chaque récepteur, une fois que le temps de vol est connu, le lieu des points possible pour la position de la cible est un cercle. Entre deux récepteurs ce lieu devient au maximum deux points et avec trois celui-ci est au maximum un point unique. 
 		\subsection{Résolution dans le cas idéal}
@@ -52,6 +53,22 @@
 			\end{equation}
 			
 			Afin de minimiser cette erreur, la fonction \texttt{Matlab fminsearch} a été utilisée. 
-				
-	
+		\subsection{Calcul du temps de vol}
+			
+			Pour calculer le temps de vol l'opération de corrélation est utilisée. Celle-ci peut être effectuée dans le domaine fréquentiel (Equation \ref{corF}) ou dans le domaine temporel (Equation \ref{corT}). 
+			\begin{equation}
+				\label{corF}
+				C(\omega) = R(\omega)S^*(\omega)
+			\end{equation}
+			\begin{equation}
+				\label{corT}
+				c(\tau) = r(t)*s(-t)
+			\end{equation}
+			
+			Deux méthodes ont été implémentées. La première consiste à faire la corrélation sur tout le signal reçu en utilisant la fonction \texttt{xcorr} de \texttt{Matlab}.
+			
+			 
+			La deuxième méthode consiste à diviser le signal en plusieurs parties. Dans le cas ici présent, un temps de vol est calculé pour chaque impulsion émises. Dans ce cas l'opération de corrélation se fait dans le domaine fréquentielle en utilisant les fonctions \texttt{fft} et \texttt{ifft} de \texttt{Matlab}. Le temps de vol utilisé est la moyenne de l'échantillon récolté sur chaque impulsion.
+			
+						
 \end{document}
