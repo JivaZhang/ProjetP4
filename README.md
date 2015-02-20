@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+# ProjetP4
+Bande de suceurs d'aubergines
+=======
 -Pour commencer Git c'est un programme (créer par Linus Torvals ) qui permet la gestion de projet.
  Il y a un dépot (voir lien plus haut) qui est hébergé chez GitHub. Ce dépot contient tous les fichiers que l'on devra utiliser.
 -Git permet de voir toutes les modifications qui ont été faites et de revenir super facilement aux versions précédentes. 
@@ -23,3 +27,4 @@ Un push ça veut dire que vous envoyer vos commits au dépot.
 		merger la branche avec la branche master
 		detruire la branche
 
+>>>>>>> origin/master
