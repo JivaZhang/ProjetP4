@@ -1,4 +1,4 @@
-function [ target ] = findTarget( Z , d )
+function [ target , fval] = findTarget( Z , d )
  Z1 = Z(1,:);
  Z2 = Z(2,:);
  Z3 = Z(3,:);
