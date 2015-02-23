@@ -258,4 +258,60 @@ Il suffit maintenant d'effectuer le produit de convolution avec le signal discre
 r(t)=\left(\sum_{n=-\infty}^{\infty}r[n]\delta (t-nT_e)\right)\ast \left( \exp^{j\omega_m t}\frac{\sin (\omega_0 t)}{\pi t} + \exp^{-j\omega_m t}\frac{\sin (\omega_0 t)}{\pi t} \right)
 \end{equation}
 
+ \subsection{Calcul de la corrélation}
+
+Nous avons la possibilité de travailler soit en temporel, soit en fréquentiel.\\
+
+Soient c(t) le signal obtenu par la convolution de r(t) et s(t) et c[n] le signal obtenu par échantillonnage de c(t) à la même fréquence d'échantillonage que s[n] et r[n]. Nous avons démontré au cours de MS0 que
+\begin{equation}
+c(t)=r(t)*s(-t)
+\end{equation}
+
+On se propose de travailler avec les signaux échantillonnés, et on obtient
+\begin{equation}
+c[n]=r[n]*s[-n]
+\end{equation}
+On obtient, par définition du produit de convolution pour des signaux discrets :
+
+\begin{equation}
+c[n]=\sum_{k=-\infty}^{\infty}r[k]s[k-n]
+\end{equation}
+
+On peut ensuite récupérer le signal en temps continu c(t) en utilisant un filtre passe-bande de la même manière que celle décrite dans la section 3.4.
+
+\begin{equation}
+c(t)=(\sum_{n=-\infty}^{\infty}c[n]\delta[t-nT_{e}])*h(t)
+\end{equation}
+
+Dans le domaine fréquentiel, nous avions
+
+\begin{equation}
+C(\omega)=R(\omega)S^{*}(\omega)
+\end{equation}
+
+Soient $R_{e}(\omega)$ et $S_{e}(\omega)$, les spectres des signaux échantillonnés r(t) et s(t). On peut écrire :
+
+\begin{equation}
+R(\omega)=R_{e}(\omega)H(\omega)
+\end{equation}
+
+\begin{equation}
+S(\omega)=S_{e}(\omega)H(\omega)
+\end{equation}
+
+\begin{equation}
+S^{*}(\omega)=S_{e}^{*}(\omega)H^{*}(\omega)=S_{e}^{*}(\omega)H(\omega)
+\end{equation}
+où $H(\omega)$, la TF de h(t) est une fenêtre rectangulaire (filtre passe-bande).
+
+Nous pouvons donc réécrire l'équation comme
+
+\begin{equation}
+C(\omega)=R_{e}(\omega)S_{e}^{*}(\omega)H(\omega)
+\end{equation}
+
+On peut ensuite réobtenir c(t) en calculant la TFI de $C(\omega)$.
+
+Ces deux manières de procéder mènent strictement au même résultat puisque $TF((17))=(22)$.
+
 \end{document}
