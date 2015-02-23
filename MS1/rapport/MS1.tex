@@ -42,49 +42,53 @@
 		L'intersection de deux de ces droites est la solution du système \ref{sys}. 
 		
 		\subsection{Résolution dans le cas non-idéal}
-			Dans le cas non-idéal le système \ref{sys} n'a pas de solution. Il est donc intéressant de chercher une solution approchée. Pour ce faire il faut trouver une expression de l'erreur commise et la minimiser. La distance d'un point $(x_p , y_p)$ à un cercle centrée en $(x_i , y_i)$ et de rayon $d_i$ ( $dist(P , C_i)$) est donnée par l'équation \ref{dist}. L'erreur commise pour une point $P$ est donc la somme de ces distances au carré (equation \ref{err}). 
-			\begin{equation}
-				dist(P , C_i)= |{\sqrt{(x_i-x_p)^2 +(y_i - y_p)^2} - d_i}| 
-				\label{dist}
-			\end{equation} 
-			
-			\begin{equation}
-				\label{err}
-				err(P) = \sum _{i=1} ^{3} (\sqrt{(x_i-x_p)^2 +(y_i - y_p)^2} - d_i)^2
-			\end{equation}
-			
-			Afin de minimiser cette erreur, la fonction \texttt{Matlab fminsearch} a été utilisée. 
-		\subsection{Calcul du temps de vol}
-			
-			Pour calculer le temps de vol l'opération de corrélation est utilisée. Celle-ci peut être effectuée dans le domaine fréquentiel (Equation \ref{corF}) ou dans le domaine temporel (Equation \ref{corT}). 
-			\begin{equation}
-				\label{corF}
-				C(\omega) = R(\omega)S^*(\omega)
-			\end{equation}
-			\begin{equation}
-				\label{corT}
-				c(\tau) = r(t)*s(-t)
-			\end{equation}
-			
-			Deux méthodes ont été implémentées. La première consiste à faire la corrélation sur tout le signal reçu en utilisant la fonction \texttt{xcorr} de \texttt{Matlab}.
-			
-			 
-			La deuxième méthode consiste à diviser le signal en plusieurs parties. Dans le cas ici présent, un temps de vol est calculé pour chaque impulsion émises. Dans ce cas l'opération de corrélation se fait dans le domaine fréquentielle en utilisant les fonctions \texttt{fft} et \texttt{ifft} de \texttt{Matlab}. Le temps de vol utilisé est la moyenne de l'échantillon récolté sur chaque impulsion.
-			
-			\begin{figure}
-				\centering
-				\begin{tabular}{|l|l|l|}
-					\hline
-					fonction & temps moyen[s] & erreur moyenne[cm] \\
-					\hline
-					no-split & 0.8516 & 0.1711 \\
-					split & 0.5857 & 0.2566 \\
-					\hline
-				\end{tabular}
-				\caption{Comparaison des différentes méthodes}
-			\end{figure}
-			
-			
+
+%\subsection{Résolution dans le cas non-idéal}
+Dans le cas non-idéal le système \ref{sys} n'a pas de solution. Il est donc intéressant de chercher une solution approchée. Pour ce faire il faut trouver une expression de l'erreur commise et la minimiser. La distance d'un point $(x_p , y_p)$ à un cercle centrée en $(x_i , y_i)$ et de rayon $d_i$ ( $dist(P , C_i)$) est donnée par l'équation \ref{dist}. L'erreur commise pour une point $P$ est donc la somme de ces distances au carré (equation \ref{err}).
+\begin{equation}
+dist(P , C_i)= |{\sqrt{(x_i-x_p)^2 +(y_i - y_p)^2} - d_i}|
+\label{dist}
+\end{equation}
+
+\begin{equation}
+\label{err}
+err(P) = \sum _{i=1} ^{3} (\sqrt{(x_i-x_p)^2 +(y_i - y_p)^2} - d_i)^2
+\end{equation}
+
+Afin de minimiser cette erreur, la méthode itérative de Newton-Raphson est utilisée. Cette méthode consiste en la résolution du système \ref{it} pour chaque pas. Le pas suivant se calcule grâce aux équations \ref{nx} et \ref{ny}. 
+
+\begin{equation}
+	\centering
+	\begin{pmatrix}
+		\frac{\partial^2 f(x_k , y_k)}{\partial x \partial x} & \frac{\partial^2 f(x_k , y_k)}{\partial y \partial x} \\
+		\frac{\partial^2 f(x_k , y_k)}{\partial x \partial y} & \frac{\partial^2 f(x_k , y_k)}{\partial y \partial y} 
+ 	\end{pmatrix} 
+ 	 \begin{pmatrix}
+ 	 	\Delta x \\
+ 	 	\Delta y 
+ 	 \end{pmatrix}
+ 	 = - 
+ 	 \begin{pmatrix}
+ 	 	\frac{\partial f(x_k , y_k)}{\partial x}\\
+ 	 	\frac{\partial f(x_k , y_k)}{\partial y} 
+ 	 \end{pmatrix}
+ 	 \label{it}
+\end{equation}
+
+\begin{equation}
+	\centering
+	\label{nx}
+	x_{k+1} = \Delta x + x_k
+\end{equation}
+
+
+\begin{equation}
+	\centering
+	\label{ny}
+	y_{k+1} = \Delta y + y_k
+\end{equation}
+
+
 			
 \section{Multilatération}
 On suppose maintenant qu'on n'a plus accès au signal émis (\textit{Tx}) mais qu'on ne dispose que des signaux reçus ($Rx_1$, $Rx_2$ et $Rx_3$), qui nous permettent d'évaluer les différences de temps d'arrivée entre les différents récepteurs ($\tau_{ij}$) la différence de temps d'arrivée entre les récepteurs $i$ et $j$. La différence de distance émetteur-récepteurs vaut alors $d_{ij} = c*\tau_{ij}$, $c$ étant la vitesse de la lumière dans l'air.
@@ -192,7 +196,7 @@ Les figures \ref{ex1} à \ref{ex3} sont des exemples de figures obtenues avec le
 On a affaire à deux signaux $s(t)$ et $r(t)$ qui sont tout deux situés dans la bande de fréquence de 6GHz à 8GHz. On va s'intéresser à l'échantillonnage de tels signaux.
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.5]{sig.jpg}
+%\includegraphics[scale=0.5]{sig.jpg}
 \caption{signal de base dans le domaine fréquentiel}
 \label{sig}
 \end{figure}
@@ -202,7 +206,7 @@ Afin d'être sûr de ne pas avoir affaire à un repli spectral, il est suffisant
 On peut maintenant échantillonner le signal donné à la figure \ref{sig}. Regardons ce qu'il en est pour une fréquence d'échantillonnage $f_e$ de 4GHz. Lorsqu'un signal en temporel est discret, cela impose que le signal dans le domaine fréquentiel est périodique avec une fréquence de répétition égale à $f_e$. On obtient donc le signal de la figure \ref{sig2}. Il est intéressant de remarquer qu'on ne respecte pas la condition de Nyquist mais qu'on a tout de même évité un repli spectral qui déteriorerait le signal. Il est donc possible, à priori, de récupérer le signal originel malgré la "faible" fréquence d'échantillonnage.
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.5]{sig2.jpg}
+%\includegraphics[scale=0.5]{sig2.jpg}
 \caption{signal échantillonné dans le domaine fréquentiel}
 \label{sig2}
 \end{figure}
