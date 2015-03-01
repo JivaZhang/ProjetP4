@@ -1,10 +1,11 @@
 %x = load('P2_cal.tsv');
-l = length(x(:,1));
+close all;
+l = length(tcal);
 l = l / 200;
 
-t = x(1:l , 1);
-s = x(1:l , 2)';
-r = x(1:l , 5)';
+t = tcal(1:l);
+s = gcal(1:l)';
+r = r1cal(1:l)';
 fs = 1/(t(2)-t(1));
 S = fft(s);
 f = fs/2 * linspace( 0 , 1 , length(s));
@@ -16,8 +17,10 @@ delay = findDelay( r , s , fs);
 sigdelay = real(ifft(delaySig(r , delay , fs)));
 
 figure;
+plot(t , r , t , sigdelay);
+legend( 'r' , 'sigdelay');
 A = findA( t , s , sigdelay);
-%A = 600;
+A = 600;
 
 figure;
 plot( t , s , t , s-A*sigdelay , t  , A*sigdelay );
