@@ -11,8 +11,9 @@
 \author{Groupe 7}
 \maketitle
 
-\section{Récupération des répliques}
-	Afin d'observer les répliques, deux configurations ont été pensée (Figure \ref{conf1} et \ref{conf2}). Dans ces deux situations $d$ est la distance $Tx$ et $Rx$ alors que $x$ est la distance minimale entre $Rx$ (ou $Tx$) et la plaque. Dans ces deux situations, le temps que met l'onde pour passer de $Rx$ à $Tx$ est donné par l'équation \ref{t1}. L'équation \ref{t2} donne le temps du trajet de l'onde réfléchie sur la plaque. $c$ est la vitesse de la lumière. 
+\section{Calcul de la différence de temps}
+	Afin d'observer les répliques, une configuration a été pensée (Figure \ref{conf1} et \ref{conf2}). $d$ est la distance $Tx$ et $Rx$ alors que $x$ est la distance minimale entre $Rx$ (ou $Tx$) et la plaque. Le temps que met l'onde pour passer de $Rx$ à $Tx$ est donné par l'équation \ref{t1}. L'équation \ref{t2} donne le temps du trajet de l'onde réfléchie sur la plaque. $c$ est la vitesse de la lumière. 	
+
 	\begin{equation}
 	t_1 = \frac{d}{c}
 	\label{t1}
@@ -23,7 +24,7 @@
 	\label{t2}
 	\end{equation}
 	
-	Le première situation sera réalisée pour obtenir un grand $\Delta t$ alors que la seconde pour en obtenir un plus grand. 
+	Le première situation sera réalisée pour obtenir un grand $\Delta t$ alors que la seconde pour en obtenir un plus grand.
 	\begin{equation}
 	\Delta t = t_2 - t_1 = (\sqrt{(\frac{d}{2})^2 + x^2} - d ) * \frac{1}{c}
 	\end{equation}
@@ -40,5 +41,26 @@
 	\caption{Deuxième configuration \label{conf2}}
 	\end{figure}		
 	
+	
+	\section{Détermination des paramètres géométriques}
+		Afin de ne pas avoir de recouvrement entre deux répliques d'une impulsion, il faut que $\Delta t$ soit plus grand que le temps d'une impulsion ($2.5ns$).
+		
+		
+		\begin{figure}[h]
+		\centering
+		\begin{tabular}{|l|l|l|l|}
+		\hline
+		 configuration & $\Delta t [ns]$ & $d [m]$ & $x [m]$ \\
+		 \hline
+		 1 & $2$ & $2$ & $0.8303$ \\
+		 2 & $4$ & $2$ & $1.2485$ \\
+		 3 & $6$ & $1$ & $1.3070$ \\
+		 4 & $8$ & $0.3$ & $1.3408$ \\
+		 5 & $10$ & $0.3$ & $1.6421$ \\
+		 \hline
+		\end{tabular}
+		
+		\caption{Set-up pour le premier labo}
+		\end{figure}
 
 \end{document}
