@@ -1,0 +1,14 @@
+i = i+1;
+Aquire1ScreenShot;
+name = ['Try' int2str(i) '.mat'];
+save(name,'Waves');
+Aquire1ScreenShot;
+name = ['Try' int2str(i) 'bis.mat'];
+save(name,'Waves');
+Aquire1ScreenShot;
+name = ['Try' int2str(i) 'bis.mat'];
+save(name,'Waves');
+
+Ts=1/Fs; t=(0:Ns-1)*Ts;
+figure; 
+plot(t,Waves,'linewidth',2); legend('GEN','RX2','RX3','RX4');
