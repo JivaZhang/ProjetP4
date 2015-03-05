@@ -1,10 +1,13 @@
 function [A] = findA(t , s , r)
 
+%using Newton-Raphson method to find the minimum of
+% int[ (s-A*r)^2]
+
 n = 0;
 delta = 100000;
 A = 30;
 
-while n<1000 && abs(delta) > 1e-4
+while n<1000 && abs(delta) > 1e-8
     prod = s - A*r;
     val = trapz(t , -2*prod.*r);
     diff = trapz(t , 2*r.^2);
@@ -12,27 +15,6 @@ while n<1000 && abs(delta) > 1e-4
     A = A-delta;
     n = n +1;
 end
-n
-
-%   n = 0;
-%   delta = 100000;
-%   A = 1;
-%   Av = linspace(0.01 , 1 , 10000);
-%   Int = Av;
-%   for i = 1:1000
-%       
-%       val = (s-Av(i)*r)
-%       Int(i) = trapz( t , val);
-%   end
-%   
-%   figure;
-%   plot(Av , Int);
-%  
-
-
-%fun= @(A) sum((s-A*r).^2);
-%[A,fval] = fminsearch(fun,[1000]); 
-
   
 end
 
