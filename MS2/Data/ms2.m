@@ -1,17 +1,18 @@
 %x = load('P2_cal.tsv');
 close all;
-load('multipath_CC');
+load('Config0Try3')
+fs = 20e9;
+t = linspace(0 , 20000*1/fs , 20000);
 l = length(t);
-l = l/100;
+l = l/10;
 
 t = t(1:l);
-s = gcal(1:l)';
-r = -r3bp(1:l);
-fs = 1/(t(2)-t(1));
+s = Waves(1:l,1)';
+r = Waves(1:l,3)';
 S = fft(s);
 f = fs/2 * linspace( 0 , 1 , length(s));
 filter = (f >= 0.7e9) .* ( f<=2e9);
-r = ifft(fft(r).*filter);
+r = real(ifft(fft(r).*filter));
 
 
 delay = findDelay( r , s , fs);
@@ -30,6 +31,7 @@ legend('s ' ,  'A*sigdelay' , 's-A*sigdelay' );
 
 figure;
 plot(t , s-A*sigdelay);
+legend('repliques');
 
 Av = linspace(-1000, 1000 , 1000);
 in = Av ;
@@ -37,7 +39,7 @@ in = Av ;
 for i = 1:1000
     in(i) = trapz( t , (s-Av(i)*sigdelay).^2);
 end
-
+figure
 plot(Av , in);
 
 

@@ -1,18 +1,18 @@
 function [A] = findA(t , s , r)
 
-% n = 0;
-% delta = 100000;
-% A = 1200;
-% 
-% while n<1000 && abs(delta) > 1e-4
-%     prod = s - A*r;
-%     val = trapz(t , -2*A*prod);
-%     diff = trapz(t , -2*s + 4*A);
-%     delta = val/diff;
-%     A = A-delta;
-%     n = n +1;
-% end
-% n
+n = 0;
+delta = 100000;
+A = 30;
+
+while n<1000 && abs(delta) > 1e-4
+    prod = s - A*r;
+    val = trapz(t , -2*prod.*r);
+    diff = trapz(t , 2*r.^2);
+    delta = val/diff;
+    A = A-delta;
+    n = n +1;
+end
+n
 
 %   n = 0;
 %   delta = 100000;
@@ -30,8 +30,8 @@ function [A] = findA(t , s , r)
 %  
 
 
-fun= @(A) sum((s-A*r).^2);
-[A,fval] = fminsearch(fun,[1000]); 
+%fun= @(A) sum((s-A*r).^2);
+%[A,fval] = fminsearch(fun,[1000]); 
 
   
 end
