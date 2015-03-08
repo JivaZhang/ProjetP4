@@ -1,0 +1,52 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{url}
+\usepackage{graphicx}
+
+\begin{document}
+\title{Projet 4: MS2}
+\date\today
+\author{Groupe 7}
+\maketitle
+
+\section{Extraction des répliques}
+	\subsection*{Alignement des signaux}
+	Afin d'extraire les répliques, les signaux reçus ($s(t)$) et émis ($r(t)$) doivent être aligner. Pour ce faire l'opération de corrélation est effectuée entre les deux signaux (voir Equation \ref{cor}). Le $\tau$ pour lequel la corrélation est maximum ($\hat{\tau}$). correspond au décalage temporel entre les deux signaux. 
+	 
+	\begin{equation}
+	\label{cor}
+	C(\tau) = \int s(t) * r(t-\tau) dt
+	\end{equation}
+	
+	Afin de décaler le signal de $\hat{\tau}$ dans le domaine temporel, un changement de phase est opéré dans le domaine de Fourier. Pour chaque fréquence une opération est effectuée où $A(f)$ et $\theta(f)$ correspondent  à l'amplitude et à la phase de la fréquence $f$ du spectre du signal reçu. $Delaysig(f)$ est le spectre du signal décalé dans le temps. 
+	
+	Cette opération décale chaque fréquence d'une phase correspondant au décalage temporel voulu (voir Equation \ref{del}).  L'amplitude étant conservée pour chaque fréquence l'opération est donc celle de l'Equation \ref{op}. Il suffit alors de faire la transformée de Fourier inverse pour retrouver le signal décalé en temporel. 
+	\begin{equation}
+		\label{del}
+			\theta(f)_{delay} = \theta(f) + (\hat {\tau} * f* 2\pi)
+	\end{equation}
+	
+	\begin{equation}
+		\label{op}
+			Delaysig(f) = A(f)* e^{j*(\theta(f)_{delay})}
+	\end{equation}
+	
+	\subsection*{Extraction du signal sans répliques}
+			Les deux signaux $r(t)$ et $s(t)$ n'ont pas la même amplitude. Afin d'extraire les répliques, une opération linéaire est effectuée entre le $r(t-\hat{\tau})$ et $s(t)$ (voir Equation \ref{srt}).
+			\begin{equation}
+				\label{srt}
+				s_r(t) = s(t) - Ar(t-\hat{\tau})
+			\end{equation} 
+			
+			$A$ est trouvé au sens des moindres carrés. Cela signifie que le $A$ correspond (voir Equation \ref{car}). 
+			
+			\begin{equation}
+				\label{car}
+				min_A = \int s_r(t)^2 dt
+			\end{equation} 
+			
+			Cette minimisation est effectuée à l'aide de la fonction \texttt{trapz()} de \texttt{MatLab} qui effective une intégration par la méthode des trapèzes et de la méthode d'optimisation de Newton-Raphson qui a été réimplémentée. 
+\end{document}
