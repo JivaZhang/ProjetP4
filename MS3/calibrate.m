@@ -5,7 +5,7 @@ function [delay] = calibrate( sended , recieved , distance , fs)
 % le signal reçu afin d'etre calibré. 
 
 c = 299792458;
-realDelay = findDelay(sended ,recieved , fs);
-expectedDelay = distance / c;
-delay = realDelay - expectedDelay;
+realDelay = findDelay(sended,recieved, fs);
+expectedDelay = distance / c 
+delay = -(expectedDelay + realDelay);
 end
